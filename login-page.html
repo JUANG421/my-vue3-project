@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心禾伴 - 登录页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: url('ui.jpg') no-repeat center center;
+
+            background-size: contain;
+            background-color: #87CEEB;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 60px;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* 登录页面样式 */
+        .login-form {
+            width: 360px;
+            position: absolute;
+            left: 50%;
+            top: 75%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 5;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            z-index: -1;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .brand-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .brand-subtitle {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.4;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            outline: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-input::placeholder {
+            color: rgba(44, 62, 80, 0.7);
+        }
+
+        .form-input::placeholder {
+            color: #95a5a6;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: rgba(44, 62, 80, 0.6);
+            font-size: 18px;
+            padding: 4px;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .links-container {
+            text-align: center;
+            margin-top: 15px;
+            position: absolute;
+            left: 50%;
+            top: calc(75% + 128px);
+            transform: translateX(-50%);
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .forgot-password {
+            text-align: center;
+        }
+
+        .forgot-password a {
+            color: rgba(173, 216, 230, 0.9);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #ADD8E6;
+        }
+
+        .divider {
+            width: 1px;
+            height: 14px;
+            background: rgba(173, 216, 230, 0.6);
+        }
+
+        .register-section {
+            text-align: center;
+        }
+
+        .register-link {
+            color: rgba(173, 216, 230, 0.9);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .register-link:hover {
+            color: #ADD8E6;
+        }
+
+        /* 设计说明样式 */
+        .design-notes {
+            width: 320px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 25px 22px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            right: 15%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .design-notes h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 22px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 8px;
+        }
+
+        .design-section {
+            margin-bottom: 18px;
+        }
+
+        .design-section h3 {
+            color: #34495e;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .design-section p {
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .design-section ul {
+            margin-left: 18px;
+            color: #555;
+        }
+
+        .design-section li {
+            margin-bottom: 4px;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+            animation: slideIn 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: absolute;
+            left: 50%;
+            top: calc(75% + 170px);
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            body {
+                background-size: cover;
+                background-position: center top;
+            }
+            
+            .login-form {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                max-width: 400px;
+                margin: 20px auto;
+            }
+            
+            .links-container {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin: 15px auto;
+            }
+            
+            .success-message {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin: 15px auto;
+            }
+            
+            .design-notes {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                max-width: 400px;
+                margin: 20px auto;
+                padding: 25px 22px;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+            
+            .brand-name {
+                font-size: 24px;
+            }
+            
+            .brand-subtitle {
+                font-size: 13px;
+            }
+        }
+        
+        /* 移动端专用样式 */
+        @media (max-width: 480px) {
+            body {
+                background-size: 100% auto;
+                background-position: center top;
+                background-repeat: no-repeat;
+            }
+            
+            .login-form {
+                padding: 20px 15px;
+            }
+            
+            .design-notes {
+                padding: 20px 15px;
+            }
+        }
+
+        /* 加载动画 */
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 登录页面 -->
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <input type="text" class="form-input" id="username" placeholder="请输入账号" required>
+            </div>
+            
+            <div class="form-group">
+                <input type="password" class="form-input" id="password" placeholder="请输入密码" required>
+                <button type="button" class="password-toggle" id="passwordToggle">👁️</button>
+            </div>
+            
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span id="loginText">登录</span>
+                <div class="loading" id="loading"></div>
+            </button>
+        </form>
+        
+        <div class="links-container">
+            <div class="forgot-password">
+                <a href="#" onclick="alert('请联系管理员重置密码')">忘记密码？</a>
+            </div>
+            <div class="divider"></div>
+            <div class="register-section">
+                <a href="#" class="register-link" id="registerBtn">注册账号</a>
+            </div>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            登录成功！欢迎使用心禾伴
+        </div>
+
+        <!-- 设计说明 -->
+        <div class="design-notes">
+            <h2>🎨 设计说明</h2>
+            
+            <div class="design-section">
+                <h3>📱 设计理念</h3>
+                <p>基于"心禾伴"品牌形象，采用简洁自然的视觉风格，营造温暖陪伴氛围。</p>
+            </div>
+
+            <div class="design-section">
+                <h3>🎯 视觉设计</h3>
+                <ul>
+                    <li><strong>背景图片：</strong>使用原创设计背景图，完美体现品牌形象</li>
+                    <li><strong>无容器设计：</strong>元素直接悬浮在背景上</li>
+                    <li><strong>色彩搭配：</strong>绿色主色调 + 天蓝色辅色</li>
+                    <li><strong>毛玻璃效果：</strong>输入框和按钮采用毛玻璃效果</li>
+                </ul>
+            </div>
+
+            <div class="design-section">
+                <h3>⚡ 交互设计</h3>
+                <ul>
+                    <li><strong>输入框聚焦：</strong>边框变色 + 阴影效果</li>
+                    <li><strong>密码显示：</strong>点击眼睛图标切换可见性</li>
+                    <li><strong>加载状态：</strong>按钮内显示旋转动画</li>
+                    <li><strong>并行布局：</strong>忘记密码和注册账号并行显示</li>
+                </ul>
+            </div>
+
+            <div class="design-section">
+                <h3>🔧 技术特性</h3>
+                <ul>
+                    <li><strong>纯HTML/CSS/JS：</strong>无需框架依赖</li>
+                    <li><strong>移动端优化：</strong>触摸友好的设计</li>
+                    <li><strong>响应式设计：</strong>适配不同屏幕尺寸</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 密码显示/隐藏切换
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = this;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        });
+
+        // 登录表单提交
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loginText = document.getElementById('loginText');
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            
+            // 显示加载状态
+            loginBtn.disabled = true;
+            loginText.style.display = 'none';
+            loading.style.display = 'block';
+            
+            // 模拟登录请求
+            setTimeout(() => {
+                if (username && password) {
+                    // 登录成功
+                    successMessage.style.display = 'block';
+                    loginBtn.style.background = '#4CAF50';
+                    
+                    // 3秒后重置
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                        loginBtn.disabled = false;
+                        loginText.style.display = 'block';
+                        loading.style.display = 'none';
+                        loginBtn.style.background = 'linear-gradient(135deg, #4CAF50, #8BC34A)';
+                        document.getElementById('loginForm').reset();
+                    }, 3000);
+                } else {
+                    // 登录失败
+                    alert('请输入账号和密码');
+                    loginBtn.disabled = false;
+                    loginText.style.display = 'block';
+                    loading.style.display = 'none';
+                }
+            }, 1500);
+        });
+
+        // 输入框聚焦效果增强
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // 注册链接点击事件
+        document.getElementById('registerBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // 跳转到注册页面
+            window.location.href = './register.html';
+        });
+    </script>
+</body>
+</html> 

@@ -1,6 +1,12 @@
 {
 	"pages": [
 		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "心禾伴"
+			}
+		},
+		{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "心禾伴 - 登录",
@@ -15,12 +21,27 @@
 			}
 		},
 		{
-			"path": "pages/index/index",
+			"path": "pages/conflict-resolution/conflict-resolution",
 			"style": {
-				"navigationBarTitleText": "心禾伴"
+				"navigationBarTitleText": "沟通调节助手",
+				"navigationStyle": "custom"
 			}
 		}
 	],
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#87ceeb",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"text": "首页"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "心禾伴",

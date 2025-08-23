@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心禾伴沟通调节助手 - UI原型设计</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #87ceeb 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 移动端原型区域 */
+        .mobile-prototype {
+            width: 375px;
+            height: 667px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .mobile-header {
+            background: linear-gradient(135deg, #87ceeb 0%, #ffffff 100%);
+            color: #333;
+            padding: 40px 20px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .mobile-header::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .mobile-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .mobile-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .mobile-content {
+            padding: 20px 20px;
+            height: calc(100% - 120px);
+            overflow-y: auto;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '📝';
+            font-size: 18px;
+        }
+
+        .input-box {
+            width: 100%;
+            height: 100px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 16px;
+            padding: 12px;
+            padding-bottom: 45px;
+            font-size: 14px;
+            color: #6c757d;
+            resize: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .input-box:focus {
+            outline: none;
+            border-color: #87ceeb;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.1);
+        }
+
+        .input-box:hover {
+            border-color: #adb5bd;
+            background: #e9ecef;
+        }
+
+        .relationship-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title.relationship::before {
+            content: '👥';
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .button-grid.two-row {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .btn {
+            padding: 10px 14px;
+            border: 2px solid #333;
+            background: white;
+            color: #333;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: #333;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn.selected {
+            background: #333;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .emotion-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title.emotion::before {
+            content: '😊';
+        }
+
+        .emotion-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .emotion-btn {
+            padding: 10px 6px;
+            border: 2px solid #333;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .emotion-btn.level1 {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .emotion-btn.level2 {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+
+        .emotion-btn.level3 {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .emotion-btn.level4 {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .emotion-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .emotion-btn.selected {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 16px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .generate-btn:hover {
+            background: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 图片上传区域 */
+        .upload-section {
+            position: absolute;
+            bottom: 8px;
+            left: 12px;
+            right: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-btn {
+            padding: 6px 10px;
+            background: #87ceeb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 8px rgba(135, 206, 235, 0.3);
+        }
+
+        .upload-btn:hover {
+            background: #5f9ea0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(135, 206, 235, 0.4);
+        }
+
+        .upload-btn:active {
+            transform: translateY(0);
+        }
+
+        .upload-btn i {
+            font-size: 16px;
+        }
+
+        .upload-preview {
+            display: none;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 8px;
+            background: #e8f4f8;
+            border-radius: 6px;
+            border: 1px solid #87ceeb;
+            flex: 1;
+        }
+
+        .upload-preview img {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        .upload-preview .file-info {
+            font-size: 10px;
+            color: #666;
+            flex: 1;
+        }
+
+        .remove-upload {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .remove-upload:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+
+        /* 设计说明区域 */
+        .design-notes {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-height: 667px;
+            overflow-y: auto;
+        }
+
+        .notes-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #87ceeb 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .note-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #87ceeb;
+        }
+
+        .note-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-section p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-item {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-primary { background: #87ceeb; }
+        .color-secondary { background: #ffffff; }
+        .color-accent { background: #333; }
+        .color-bg { background: #f8f9fa; }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .design-notes {
+                max-width: 600px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .mobile-prototype {
+                width: 320px;
+                height: 568px;
+            }
+            
+            .design-notes {
+                padding: 20px;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-content > * {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .mobile-content > *:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-content > *:nth-child(2) { animation-delay: 0.2s; }
+        .mobile-content > *:nth-child(3) { animation-delay: 0.3s; }
+        .mobile-content > *:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 移动端原型 -->
+        <div class="mobile-prototype">
+            <div class="mobile-header">
+                <div class="mobile-title">心禾伴沟通调节助手</div>
+                <div class="mobile-subtitle">专业沟通冲突解决方案</div>
+            </div>
+            
+            <div class="mobile-content">
+                <!-- 输入描述区域 -->
+                <div class="input-section">
+                    <div class="section-title">请描述冲突或上传图片</div>
+                    <div class="input-container">
+                        <textarea class="input-box" placeholder="请详细描述您遇到的沟通冲突情况，或者点击上传相关文件..."></textarea>
+                        
+                        <!-- 图片上传区域 -->
+                        <div class="upload-section">
+                            <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">
+                                📷 上传图片
+                            </button>
+                            <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                            
+                            <!-- 图片预览区域 -->
+                            <div class="upload-preview" id="uploadPreview">
+                                <img id="previewImage" src="" alt="预览图片">
+                                <div class="file-info">
+                                    <div id="fileName">图片名称</div>
+                                    <div id="fileSize">文件大小</div>
+                                </div>
+                                <button class="remove-upload" onclick="removeUpload()">×</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 关系选择区域 -->
+                <div class="relationship-section">
+                    <div class="section-title relationship">请选择需要解决的冲突关系</div>
+                    <div class="button-grid">
+                        <button class="btn" data-type="relationship" data-value="family">家人</button>
+                        <button class="btn" data-type="relationship" data-value="campus">校园</button>
+                        <button class="btn" data-type="relationship" data-value="colleague">同事</button>
+                        <button class="btn" data-type="relationship" data-value="neighbor">邻居</button>
+                        <button class="btn" data-type="relationship" data-value="friend">朋友</button>
+                        <button class="btn" data-type="relationship" data-value="auto">自动识别</button>
+                    </div>
+                </div>
+
+                <!-- 情绪强度选择 -->
+                <div class="emotion-section">
+                    <div class="section-title emotion">请选择当前的情绪强度</div>
+                    <div class="emotion-buttons">
+                        <button class="emotion-btn level1" data-type="emotion" data-value="1">1级</button>
+                        <button class="emotion-btn level2" data-type="emotion" data-value="2">2级</button>
+                        <button class="emotion-btn level3" data-type="emotion" data-value="3">3级</button>
+                        <button class="emotion-btn level4" data-type="emotion" data-value="4">4级</button>
+                    </div>
+                </div>
+
+                <!-- 生成结果按钮 -->
+                <button class="generate-btn" onclick="generateResult()">生成结果</button>
+            </div>
+        </div>
+
+        <!-- 设计说明 -->
+        <div class="design-notes">
+            <h1 class="notes-title">UI设计说明文档</h1>
+            
+            <div class="note-section">
+                <h3>🎯 设计理念</h3>
+                <p>采用现代简约设计风格，注重用户体验和视觉层次。通过渐变色彩和圆角设计营造温暖友好的氛围，符合心理咨询类应用的专业性和亲和力。</p>
+            </div>
+
+            <div class="note-section">
+                <h3>🎨 色彩系统</h3>
+                <p>主色调采用蓝白色渐变，传达专业、信任感和清新感；辅助色为深灰色，确保良好的可读性；情绪强度按钮采用语义化色彩编码。</p>
+                <div class="color-palette">
+                    <div class="color-item color-primary" title="主色调"></div>
+                    <div class="color-item color-secondary" title="辅助色"></div>
+                    <div class="color-item color-accent" title="强调色"></div>
+                    <div class="color-item color-bg" title="背景色"></div>
+                </div>
+            </div>
+
+            <div class="note-section">
+                <h3>📱 移动端适配</h3>
+                <p>设计尺寸为375x667px，符合主流移动设备屏幕比例。采用触摸友好的44px最小点击区域，确保良好的操作体验。支持响应式布局，适配不同屏幕尺寸。</p>
+            </div>
+
+            <div class="note-section">
+                <h3>🔧 交互设计</h3>
+                <p>所有按钮和输入框都具有悬停、点击和选中状态反馈。关系选择为单选，情绪强度为单选。输入框支持文本输入和图片上传，具有完整的图片预览和删除功能。</p>
+            </div>
+
+            <div class="note-section">
+                <h3>✨ 视觉细节</h3>
+                <p>采用卡片式布局，增加层次感；圆角设计营造柔和感；阴影效果增强立体感；渐变背景提升视觉吸引力；图标和emoji增强可读性和趣味性。</p>
+            </div>
+
+            <div class="note-section">
+                <h3>📋 功能说明</h3>
+                <p>页面包含三个主要功能模块：冲突描述输入（支持文字和图片）、关系类型选择、情绪强度评估。图片上传支持预览、删除和文件大小限制，所有选择都会实时反馈，最终通过"生成结果"按钮提交并获取专业的沟通调节建议。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 关系选择逻辑
+        document.querySelectorAll('[data-type="relationship"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 移除其他按钮的选中状态
+                document.querySelectorAll('[data-type="relationship"]').forEach(b => b.classList.remove('selected'));
+                // 添加当前按钮的选中状态
+                this.classList.add('selected');
+                
+                // 添加点击反馈
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // 情绪强度选择逻辑
+        document.querySelectorAll('[data-type="emotion"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 移除其他按钮的选中状态
+                document.querySelectorAll('[data-type="emotion"]').forEach(b => b.classList.remove('selected'));
+                // 添加当前按钮的选中状态
+                this.classList.add('selected');
+                
+                // 添加点击反馈
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // 输入框交互
+        const inputBox = document.querySelector('.input-box');
+        inputBox.addEventListener('click', function() {
+            this.style.borderColor = '#87ceeb';
+            this.style.background = 'white';
+        });
+
+        // 图片上传处理
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // 检查文件类型
+                if (!file.type.startsWith('image/')) {
+                    alert('请选择图片文件！');
+                    return;
+                }
+                
+                // 检查文件大小（限制为5MB）
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('图片文件大小不能超过5MB！');
+                    return;
+                }
+                
+                // 创建预览
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                    document.getElementById('fileName').textContent = file.name;
+                    document.getElementById('fileSize').textContent = formatFileSize(file.size);
+                    document.getElementById('uploadPreview').style.display = 'flex';
+                };
+                reader.readAsDataURL(file);
+                
+                // 添加成功提示
+                showUploadSuccess();
+            }
+        }
+
+        // 移除上传的图片
+        function removeUpload() {
+            document.getElementById('uploadPreview').style.display = 'none';
+            document.getElementById('imageUpload').value = '';
+            document.getElementById('previewImage').src = '';
+            document.getElementById('fileName').textContent = '图片名称';
+            document.getElementById('fileSize').textContent = '文件大小';
+        }
+
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 显示上传成功提示
+        function showUploadSuccess() {
+            const uploadBtn = document.querySelector('.upload-btn');
+            const originalText = uploadBtn.innerHTML;
+            uploadBtn.innerHTML = '✅ 上传成功';
+            uploadBtn.style.background = '#28a745';
+            
+            setTimeout(() => {
+                uploadBtn.innerHTML = originalText;
+                uploadBtn.style.background = '#87ceeb';
+            }, 2000);
+        }
+
+        // 生成结果功能
+        function generateResult() {
+            const selectedRelationship = document.querySelector('[data-type="relationship"].selected');
+            const selectedEmotion = document.querySelector('[data-type="emotion"].selected');
+            const inputText = inputBox.value.trim();
+
+            if (!inputText) {
+                alert('请先描述您遇到的冲突情况');
+                return;
+            }
+
+            if (!selectedRelationship) {
+                alert('请选择冲突对象关系');
+                return;
+            }
+
+            if (!selectedEmotion) {
+                alert('请选择当前情绪强度');
+                return;
+            }
+
+            // 模拟生成结果
+            const btn = document.querySelector('.generate-btn');
+            btn.textContent = '生成中...';
+            btn.style.background = '#28a745';
+            
+            setTimeout(() => {
+                alert(`分析完成！\n\n冲突描述：${inputText}\n关系类型：${selectedRelationship.textContent}\n情绪强度：${selectedEmotion.textContent}\n\n正在为您生成专业的沟通调节建议...`);
+                btn.textContent = '生成结果';
+                btn.style.background = '#333';
+            }, 2000);
+        }
+
+        // 添加页面加载动画
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.8s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

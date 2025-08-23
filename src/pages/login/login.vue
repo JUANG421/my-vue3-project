@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 
 // 响应式数据
 const formData = reactive({
@@ -110,24 +110,48 @@ const handleLogin = async () => {
   loading.value = true
   
   try {
-    // 模拟登录请求
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    // 模拟登录请求（这里可以添加真实的登录验证逻辑）
+    if (formData.username === 'admin' && formData.password === '123456') {
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      // 登录成功
+      showSuccess.value = true
+    } else {
+      throw new Error('账号或密码错误')
+    }
     
-    // 登录成功
-    showSuccess.value = true
+    // 设置登录状态
+    try {
+      uni.setStorageSync('isLoggedIn', true)
+      uni.setStorageSync('username', formData.username)
+      console.log('登录状态已设置:', true)
+    } catch (error) {
+      console.error('设置登录状态失败:', error)
+    }
     
-    // 3秒后跳转或重置
+    // 2秒后跳转
     setTimeout(() => {
       showSuccess.value = false
       loading.value = false
       formData.username = ''
       formData.password = ''
       
+      console.log('准备跳转到首页')
       // 跳转到首页
-      uni.switchTab({
-        url: '/pages/index/index'
+      uni.reLaunch({
+        url: '/pages/index/index',
+        success: () => {
+          console.log('跳转成功')
+        },
+        fail: (error) => {
+          console.error('跳转失败:', error)
+          // 如果跳转失败，尝试其他方式
+          uni.redirectTo({
+            url: '/pages/index/index'
+          })
+        }
       })
-    }, 3000)
+    }, 2000)
     
   } catch (error) {
     uni.showToast({
@@ -153,6 +177,21 @@ const handleRegister = () => {
     url: '/pages/register/register'
   })
 }
+
+// 页面加载时检查登录状态
+onMounted(() => {
+  try {
+    const isLoggedIn = uni.getStorageSync('isLoggedIn')
+    if (isLoggedIn) {
+      console.log('已登录，跳转到首页')
+      uni.reLaunch({
+        url: '/pages/index/index'
+      })
+    }
+  } catch (error) {
+    console.error('检查登录状态失败:', error)
+  }
+})
 </script>
 
 <style scoped>
